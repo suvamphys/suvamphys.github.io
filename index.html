@@ -3,21 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Homepage</title>
+  <title>Brownian Motion Background</title>
   <style>
-    body, html {
+    html, body {
       margin: 0;
       padding: 0;
       overflow: hidden;
       height: 100%;
-      background: #0e0e0e;
+      background-color: black;
       color: white;
       font-family: Arial, sans-serif;
     }
 
-    #backgroundCanvas {
+    #brownianCanvas {
       position: fixed;
-      top: 0; left: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
       z-index: -1;
@@ -32,59 +33,64 @@
   </style>
 </head>
 <body>
-  <canvas id="backgroundCanvas"></canvas>
+  <canvas id="brownianCanvas"></canvas>
+
   <div class="content">
-    <h1>Welcome to My Homepage</h1>
-    <p>Random motion in the background — just like Brownian particles!</p>
+    <h1>Welcome to My Page</h1>
+    <p>Brownian motion — physics meets code!</p>
   </div>
 
   <script>
-    const canvas = document.getElementById("backgroundCanvas");
-    const ctx = canvas.getContext("2d");
-    let particles = [];
+    const canvas = document.getElementById('brownianCanvas');
+    const ctx = canvas.getContext('2d');
 
     function resize() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
     }
-    window.addEventListener("resize", resize);
+    window.addEventListener('resize', resize);
     resize();
 
-    const N = 200; // number of particles
-    for (let i = 0; i < N; i++) {
+    const nParticles = 20;      // number of Brownian particles
+    const stepSize = 1.5;       // diffusion step size
+    const trailLength = 0.1;    // transparency for trails
+    const particles = [];
+
+    for (let i = 0; i < nParticles; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 1.5,
-        vy: (Math.random() - 0.5) * 1.5
+        color: `hsl(${Math.random() * 360}, 80%, 70%)`
       });
     }
 
-    function update() {
-      for (let p of particles) {
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-      }
-    }
-
     function draw() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      // fade old trails slightly (instead of clearing)
+      ctx.fillStyle = `rgba(0, 0, 0, ${trailLength})`;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // update positions
       for (let p of particles) {
+        p.x += (Math.random() - 0.5) * stepSize * 2;
+        p.y += (Math.random() - 0.5) * stepSize * 2;
+
+        // periodic boundary conditions
+        if (p.x < 0) p.x += canvas.width;
+        if (p.x > canvas.width) p.x -= canvas.width;
+        if (p.y < 0) p.y += canvas.height;
+        if (p.y > canvas.height) p.y -= canvas.height;
+
+        // draw particle
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2, 0, 2 * Math.PI);
+        ctx.arc(p.x, p.y, 2.0, 0, 2 * Math.PI);
+        ctx.fillStyle = p.color;
         ctx.fill();
       }
+
+      requestAnimationFrame(draw);
     }
 
-    function animate() {
-      update();
-      draw();
-      requestAnimationFrame(animate);
-    }
-    animate();
+    draw();
   </script>
 </body>
 </html>
