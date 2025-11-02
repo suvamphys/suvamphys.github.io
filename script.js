@@ -14,6 +14,16 @@ const stepSize = 4;
 let hue = Math.random() * 360; // Start with a random color
 
 function draw() {
+    
+    // =========================================================
+    // NEW LINES FOR FADING EFFECT:
+    // This is the RGB for your dark brown bg #281a0c
+    // The '0.05' is the alpha. A lower number = a longer tail.
+    ctx.fillStyle = 'rgba(40, 26, 12, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    // =========================================================
+
+
     // 1. Calculate the new random step
     const dx = (Math.random() - 0.5) * 2 * stepSize;
     const dy = (Math.random() - 0.5) * 2 * stepSize;
@@ -26,13 +36,8 @@ function draw() {
     ctx.moveTo(x, y);
     ctx.lineTo(newX, newY);
     
-    // =========================================================
-    // MODIFIED LINE:
-    // Lightness is changed from 50% to 75%
-    // Alpha is slightly increased from 0.3 to 0.4
+    // Light-colored trajectory
     ctx.strokeStyle = `hsla(${hue}, 100%, 75%, 0.4)`; 
-    // =========================================================
-
     ctx.lineWidth = 1;
     ctx.stroke();
 
@@ -57,8 +62,11 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
     x = canvas.width / 2;
     y = canvas.height / 2;
-    // We don't clear the context here, to let trajectories
-    // naturally fill the new space.
+    
+    // When resizing, we should clear the canvas
+    // to avoid weird artifacts.
+    ctx.fillStyle = 'rgba(40, 26, 12, 1)'; // Solid color
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 });
 
 // Start the animation
