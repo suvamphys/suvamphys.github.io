@@ -1,5 +1,27 @@
 /* style.css */
 
+/* ADD THIS NEW RULE FOR THE PHOTO */
+#profile-pic {
+    /* Sizing */
+    width: 150px;  /* Or any size you like */
+    height: 150px;
+
+    /* This makes it a circle */
+    border-radius: 50%; 
+    
+    /* This prevents the image from being stretched/squished */
+    object-fit: cover; 
+
+    /* Centering the image */
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem; /* Space below the photo */
+
+    /* Optional: Add a nice border */
+    border: 3px solid #e0e0e0; /* Light border to make it pop */
+}
+
 body {
     background-color: #281a0c;
     color: #e0e0e0;
