@@ -1,3 +1,20 @@
+/* style.css */
+
+#profile-pic {
+    /* Sizing */
+    width: 100px;  /* <-- Smaller size (was 150px) */
+    height: 100px; /* <-- Smaller size (was 150px) */
+
+    /* The rest of these can remain the same */
+    border-radius: 50%; 
+    object-fit: cover; 
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 1.5rem; 
+    border: 3px solid #e0e0e0;
+}
+
 /* ADD THESE NEW RULES */
 
 .simulation-container {
