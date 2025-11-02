@@ -4,8 +4,8 @@ const canvas = document.getElementById('brownian-canvas');
 const ctx = canvas.getContext('2d');
 
 // --- Walker Parameters ---
-const numWalkers = 5; 
-const stepSize = 1;  
+const numWalkers = 20; 
+const stepSize = 4;  
 const attractionStrength = 0.05; 
 const maxAttractionSpeed = 3;   
 
