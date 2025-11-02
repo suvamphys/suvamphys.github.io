@@ -15,7 +15,6 @@ let hue = Math.random() * 360; // Start with a random color
 
 function draw() {
     // 1. Calculate the new random step
-    // (Math.random() - 0.5) gives a value between -0.5 and 0.5
     const dx = (Math.random() - 0.5) * 2 * stepSize;
     const dy = (Math.random() - 0.5) * 2 * stepSize;
     
@@ -27,9 +26,13 @@ function draw() {
     ctx.moveTo(x, y);
     ctx.lineTo(newX, newY);
     
-    // Use HSL for a nice color-changing effect
-    // 'hsla' includes alpha (transparency)
-    ctx.strokeStyle = `hsla(${hue}, 100%, 50%, 0.3)`; 
+    // =========================================================
+    // MODIFIED LINE:
+    // Lightness is changed from 50% to 75%
+    // Alpha is slightly increased from 0.3 to 0.4
+    ctx.strokeStyle = `hsla(${hue}, 100%, 75%, 0.4)`; 
+    // =========================================================
+
     ctx.lineWidth = 1;
     ctx.stroke();
 
@@ -42,7 +45,6 @@ function draw() {
     if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) {
         x = canvas.width / 2;
         y = canvas.height / 2;
-        // The next loop's moveTo(x, y) will handle the "jump"
     }
 
     // 5. Request the next animation frame
@@ -53,11 +55,10 @@ function draw() {
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    // Reset walker to the new center
     x = canvas.width / 2;
     y = canvas.height / 2;
-    // Clear the old trajectory
-    ctx.clearRect(0, 0, canvas.width, canvas.height); 
+    // We don't clear the context here, to let trajectories
+    // naturally fill the new space.
 });
 
 // Start the animation
