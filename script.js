@@ -3,13 +3,13 @@
 const canvas = document.getElementById('brownian-canvas');
 const ctx = canvas.getContext('2d');
 
-// --- Walker Parameters ---
-let x, y, hue; // We will set these in setupCanvas
-const stepSize = 4;
+// --- NEW: Walker Parameters ---
+const numWalkers = 5; // Exactly 5 particles
+const stepSize = 1;  // Small random jitter
+const attractionStrength = 0.05; // How strongly they pull towards the mouse
+const maxAttractionSpeed = 3;   // Cap the speed of attraction
 
-// --- NEW: Mouse Interaction Parameters ---
-const repulsionRadius = 150; // How close the mouse must be to affect the particle
-const repulsionStrength = 10; // How strongly the particle is pushed away
+let walkers = []; // Array to hold all walker objects
 
 // This object will store the mouse's current position
 let mouse = {
@@ -17,27 +17,31 @@ let mouse = {
     y: null
 };
 
-// --- NEW: Event listener to update mouse position ---
+// --- Event listener to update mouse position ---
 window.addEventListener('mousemove', (event) => {
     mouse.x = event.clientX;
     mouse.y = event.clientY;
 });
 
-// --- NEW: Event listener for when mouse leaves window ---
+// --- Event listener for when mouse leaves window ---
 window.addEventListener('mouseout', () => {
     mouse.x = null;
     mouse.y = null;
 });
 
-// --- Setup function for one walker ---
+// --- Setup function for all walkers ---
 function setupCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
-    // Start the walker in the center
-    x = canvas.width / 2;
-    y = canvas.height / 2;
-    hue = Math.random() * 360;
+    walkers = []; // Clear previous walkers
+    for (let i = 0; i < numWalkers; i++) {
+        walkers.push({
+            x: Math.random() * canvas.width,  // Random initial X position
+            y: Math.random() * canvas.height, // Random initial Y position
+            hue: Math.random() * 360          // Random start color
+        });
+    }
     
     // Clear the canvas with a solid fill
     ctx.fillStyle = 'rgba(40, 26, 12, 1)';
@@ -47,65 +51,69 @@ function setupCanvas() {
 
 function draw() {
     
-    // 1. Fading Effect
+    // 1. Fading Effect (Runs ONCE per frame for the whole canvas)
     ctx.fillStyle = 'rgba(40, 26, 12, 0.05)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // 2. Calculate the random (Brownian) step
-    const dx_rand = (Math.random() - 0.5) * 2 * stepSize;
-    const dy_rand = (Math.random() - 0.5) * 2 * stepSize;
+    // 2. Loop through every walker and update it
+    walkers.forEach(walker => {
+        // a. Calculate the random (Brownian) step
+        const dx_rand = (Math.random() - 0.5) * 2 * stepSize;
+        const dy_rand = (Math.random() - 0.5) * 2 * stepSize;
 
-    // --- NEW: Calculate Mouse Repulsion Step ---
-    let dx_mouse = 0;
-    let dy_mouse = 0;
+        // b. Calculate Mouse Attraction Step
+        let dx_attraction = 0;
+        let dy_attraction = 0;
 
-    if (mouse.x !== null) {
-        // Get the vector from the mouse to the particle
-        const vecX = x - mouse.x;
-        const vecY = y - mouse.y;
-        
-        // Calculate the distance
-        const dist = Math.sqrt(vecX * vecX + vecY * vecY);
-
-        // If the mouse is within the repulsion radius...
-        if (dist < repulsionRadius) {
-            // Calculate the normalized direction vector
-            const normX = vecX / dist;
-            const normY = vecY / dist;
+        if (mouse.x !== null) {
+            // Get the vector from the particle to the mouse
+            const vecX = mouse.x - walker.x;
+            const vecY = mouse.y - walker.y;
             
-            // Calculate a force that's strongest at the center
-            const force = (1 - dist / repulsionRadius) * repulsionStrength;
-            
-            // Apply the force to our mouse-step
-            dx_mouse = normX * force;
-            dy_mouse = normY * force;
+            // Calculate the distance
+            const dist = Math.sqrt(vecX * vecX + vecY * vecY);
+
+            if (dist > 1) { // Avoid division by zero if exactly on mouse
+                // Normalize the vector (get direction)
+                const normX = vecX / dist;
+                const normY = vecY / dist;
+                
+                // Apply attraction force, capping its speed
+                const currentAttractionSpeed = Math.min(dist * attractionStrength, maxAttractionSpeed);
+                dx_attraction = normX * currentAttractionSpeed;
+                dy_attraction = normY * currentAttractionSpeed;
+            }
         }
-    }
-    
-    // 3. Combine both steps and find the new position
-    const newX = x + dx_rand + dx_mouse;
-    const newY = y + dy_rand + dy_mouse;
+        
+        // c. Combine both steps and find the new position
+        const newX = walker.x + dx_rand + dx_attraction;
+        const newY = walker.y + dy_rand + dy_attraction;
 
-    // 4. Draw the single step segment
-    ctx.beginPath();
-    ctx.moveTo(x, y);
-    ctx.lineTo(newX, newY);
-    ctx.strokeStyle = `hsla(${hue}, 100%, 75%, 0.4)`; 
-    ctx.lineWidth = 1;
-    ctx.stroke();
+        // d. Draw the single step segment
+        ctx.beginPath();
+        ctx.moveTo(walker.x, walker.y);
+        ctx.lineTo(newX, newY);
+        ctx.strokeStyle = `hsla(${walker.hue}, 100%, 75%, 0.4)`; 
+        ctx.lineWidth = 1;
+        ctx.stroke();
 
-    // 5. Update the walker's position
-    x = newX;
-    y = newY;
-    hue = (hue + 0.1) % 360;
+        // e. Update the walker's position
+        walker.x = newX;
+        walker.y = newY;
+        walker.hue = (walker.hue + 0.1) % 360;
 
-    // 6. Handle Edges: Reset to center
-    if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) {
-        x = canvas.width / 2;
-        y = canvas.height / 2;
-    }
+        // f. Handle Edges: If walker goes off-screen, bounce it back
+        //    (Instead of resetting to center, which would look odd with attraction)
+        if (walker.x < 0 || walker.x > canvas.width) {
+            walker.x = Math.max(0, Math.min(canvas.width, walker.x)); // Clamp it to edge
+            // You could also reverse direction for a bounce effect, but clamping is simpler here.
+        }
+        if (walker.y < 0 || walker.y > canvas.height) {
+            walker.y = Math.max(0, Math.min(canvas.height, walker.y));
+        }
+    });
 
-    // 7. Request the next animation frame
+    // 3. Request the next animation frame
     requestAnimationFrame(draw);
 }
 
