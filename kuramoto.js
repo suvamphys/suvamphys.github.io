@@ -6,12 +6,12 @@
     const ctx = canvas.getContext('2d');
 
     // --- Simulation Parameters ---
-    const N = 80; // Number of oscillators
+    const N = 200; // Number of oscillators
     const K = 2.0; // Coupling strength
     const NAT_FREQ_STD_DEV = 0.5; // Spread of natural frequencies
     const TIME_STEP = 0.02;
-    const REPULSION_RADIUS = 100;
-    const REPULSION_STRENGTH = 10;
+    const REPULSION_RADIUS = 50;
+    const REPULSION_STRENGTH = 1;
     
     let oscillators = [];
     let centerX, centerY, radius;
