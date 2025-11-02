@@ -7,14 +7,29 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <canvas id="brownian-canvas"></canvas>
 
     <main>
         <h1>suvam</h1>
-        <img src="507978293_1491779388898323_2881701012045836748_n.jpg" alt="A photo of Your Name" id="profile-pic">
-        <p>Welcome to my personal page. Here are some of my projects...</p>
-        </main>
+        <img src="profile.jpg" alt="A photo of Your Name" id="profile-pic">
+        <p>Welcome to my personal page. Below are some interactive simulations.</p>
+    </main>
 
-    <script src="script.js"></script>
+    <div class="simulation-container">
+        
+        <div class="sim-wrapper">
+            <h3>Brownian Ants</h3>
+            <canvas id="brownian-canvas" class="sim-canvas"></canvas>
+        </div>
+        
+        <div class="sim-wrapper">
+            <h3>Kuramoto Oscillators</h3>
+            <canvas id="kuramoto-canvas" class="sim-canvas"></canvas>
+        </div>
+
+    </div>
+
+    <script src="brownian.js"></script>
+    <script src="kuramoto.js"></script>
+
 </body>
 </html>
