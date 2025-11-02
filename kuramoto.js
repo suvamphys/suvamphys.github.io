@@ -11,7 +11,7 @@
     const NAT_FREQ_STD_DEV = 0.5; // Spread of natural frequencies
     const TIME_STEP = 0.02;
     const REPULSION_RADIUS = 100;
-    const REPULSION_STRENGTH = 0.5;
+    const REPULSION_STRENGTH = 10;
     
     let oscillators = [];
     let centerX, centerY, radius;
