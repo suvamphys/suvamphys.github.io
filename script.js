@@ -4,78 +4,113 @@ const canvas = document.getElementById('brownian-canvas');
 const ctx = canvas.getContext('2d');
 
 // --- Walker Parameters ---
-const numWalkers = 75; // <-- Set how many walkers you want
-const stepSize = 3;   // <-- You might want a slightly smaller step
-let walkers = [];     // Array to hold all walker objects
+let x, y, hue; // We will set these in setupCanvas
+const stepSize = 4;
 
-// --- NEW: Function to create or reset all walkers ---
-function setupWalkers() {
-    walkers = []; // Clear the old array
-    for (let i = 0; i < numWalkers; i++) {
-        walkers.push({
-            x: canvas.width / 2,  // Start all in the center
-            y: canvas.height / 2,
-            hue: Math.random() * 360 // Give each a random start color
-        });
-    }
-}
+// --- NEW: Mouse Interaction Parameters ---
+const repulsionRadius = 150; // How close the mouse must be to affect the particle
+const repulsionStrength = 10; // How strongly the particle is pushed away
 
-// --- MODIFIED: The main animation loop ---
-function draw() {
-    
-    // 1. Fading Effect (Runs ONCE per frame)
-    // This fades the *entire* canvas
-    ctx.fillStyle = 'rgba(40, 26, 12, 0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+// This object will store the mouse's current position
+let mouse = {
+    x: null,
+    y: null
+};
 
-    // 2. Loop through every walker and update it
-    walkers.forEach(walker => {
-        // a. Calculate the new random step
-        const dx = (Math.random() - 0.5) * 2 * stepSize;
-        const dy = (Math.random() - 0.5) * 2 * stepSize;
-        
-        const newX = walker.x + dx;
-        const newY = walker.y + dy;
+// --- NEW: Event listener to update mouse position ---
+window.addEventListener('mousemove', (event) => {
+    mouse.x = event.clientX;
+    mouse.y = event.clientY;
+});
 
-        // b. Draw the single step segment
-        ctx.beginPath();
-        ctx.moveTo(walker.x, walker.y);
-        ctx.lineTo(newX, newY);
-        // Use the walker's specific hue
-        ctx.strokeStyle = `hsla(${walker.hue}, 100%, 75%, 0.4)`; 
-        ctx.lineWidth = 1;
-        ctx.stroke();
+// --- NEW: Event listener for when mouse leaves window ---
+window.addEventListener('mouseout', () => {
+    mouse.x = null;
+    mouse.y = null;
+});
 
-        // c. Update the walker's position
-        walker.x = newX;
-        walker.y = newY;
-        walker.hue = (walker.hue + 0.1) % 360; // Slowly cycle its color
-
-        // d. Handle Edges: If walker goes off-screen, reset to center
-        if (walker.x < 0 || walker.x > canvas.width || walker.y < 0 || walker.y > canvas.height) {
-            walker.x = canvas.width / 2;
-            walker.y = canvas.height / 2;
-        }
-    });
-
-
-    // 3. Request the next animation frame
-    requestAnimationFrame(draw);
-}
-
-// --- MODIFIED: Handle window resizing ---
-window.addEventListener('resize', () => {
+// --- Setup function for one walker ---
+function setupCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     
-    // Reset all walkers to the new center
-    setupWalkers(); 
+    // Start the walker in the center
+    x = canvas.width / 2;
+    y = canvas.height / 2;
+    hue = Math.random() * 360;
     
-    // Clear the old trajectory with a solid fill
+    // Clear the canvas with a solid fill
     ctx.fillStyle = 'rgba(40, 26, 12, 1)';
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-});
+}
 
-// --- Initial Setup ---
-setupWalkers(); // Create the walkers
-draw();         // Start the animation
+
+function draw() {
+    
+    // 1. Fading Effect
+    ctx.fillStyle = 'rgba(40, 26, 12, 0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    // 2. Calculate the random (Brownian) step
+    const dx_rand = (Math.random() - 0.5) * 2 * stepSize;
+    const dy_rand = (Math.random() - 0.5) * 2 * stepSize;
+
+    // --- NEW: Calculate Mouse Repulsion Step ---
+    let dx_mouse = 0;
+    let dy_mouse = 0;
+
+    if (mouse.x !== null) {
+        // Get the vector from the mouse to the particle
+        const vecX = x - mouse.x;
+        const vecY = y - mouse.y;
+        
+        // Calculate the distance
+        const dist = Math.sqrt(vecX * vecX + vecY * vecY);
+
+        // If the mouse is within the repulsion radius...
+        if (dist < repulsionRadius) {
+            // Calculate the normalized direction vector
+            const normX = vecX / dist;
+            const normY = vecY / dist;
+            
+            // Calculate a force that's strongest at the center
+            const force = (1 - dist / repulsionRadius) * repulsionStrength;
+            
+            // Apply the force to our mouse-step
+            dx_mouse = normX * force;
+            dy_mouse = normY * force;
+        }
+    }
+    
+    // 3. Combine both steps and find the new position
+    const newX = x + dx_rand + dx_mouse;
+    const newY = y + dy_rand + dy_mouse;
+
+    // 4. Draw the single step segment
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+    ctx.lineTo(newX, newY);
+    ctx.strokeStyle = `hsla(${hue}, 100%, 75%, 0.4)`; 
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    // 5. Update the walker's position
+    x = newX;
+    y = newY;
+    hue = (hue + 0.1) % 360;
+
+    // 6. Handle Edges: Reset to center
+    if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) {
+        x = canvas.width / 2;
+        y = canvas.height / 2;
+    }
+
+    // 7. Request the next animation frame
+    requestAnimationFrame(draw);
+}
+
+// --- Event Listeners and Startup ---
+window.addEventListener('resize', setupCanvas);
+
+setupCanvas(); // Call setup once at the start
+draw();        // Start the animation
