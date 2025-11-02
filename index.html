@@ -1,96 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Brownian Motion Background</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      background-color: black;
-      color: white;
-      font-family: Arial, sans-serif;
-    }
-
-    #brownianCanvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-    }
-
-    .content {
-      position: relative;
-      text-align: center;
-      top: 40%;
-      transform: translateY(-50%);
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My GitHub Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <canvas id="brownianCanvas"></canvas>
+    <canvas id="brownian-canvas"></canvas>
 
-  <div class="content">
-    <h1>Welcome to My Page</h1>
-    <p>Brownian motion — physics meets code!</p>
-  </div>
+    <main>
+        <h1>Your Name</h1>
+        <p>Welcome to my personal page. Here are some of my projects...</p>
+        </main>
 
-  <script>
-    const canvas = document.getElementById('brownianCanvas');
-    const ctx = canvas.getContext('2d');
-
-    function resize() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    const nParticles = 20;      // number of Brownian particles
-    const stepSize = 1.5;       // diffusion step size
-    const trailLength = 0.1;    // transparency for trails
-    const particles = [];
-
-    for (let i = 0; i < nParticles; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        color: `hsl(${Math.random() * 360}, 80%, 70%)`
-      });
-    }
-
-    function draw() {
-      // fade old trails slightly (instead of clearing)
-      ctx.fillStyle = `rgba(0, 0, 0, ${trailLength})`;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // update positions
-      for (let p of particles) {
-        p.x += (Math.random() - 0.5) * stepSize * 2;
-        p.y += (Math.random() - 0.5) * stepSize * 2;
-
-        // periodic boundary conditions
-        if (p.x < 0) p.x += canvas.width;
-        if (p.x > canvas.width) p.x -= canvas.width;
-        if (p.y < 0) p.y += canvas.height;
-        if (p.y > canvas.height) p.y -= canvas.height;
-
-        // draw particle
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 2.0, 0, 2 * Math.PI);
-        ctx.fillStyle = p.color;
-        ctx.fill();
-      }
-
-      requestAnimationFrame(draw);
-    }
-
-    draw();
-  </script>
+    <script src="script.js"></script>
 </body>
 </html>
