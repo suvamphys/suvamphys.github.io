@@ -3,46 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My GitHub Page</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Suvam Pal - Academic Portfolio</title>
+    <style>
+        :root {
+            --bg-color: #fafafa;
+            --text-main: #222222;
+            --text-muted: #555555;
+            --accent: #0056b3;
+            --border-color: #eaeaea;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-main);
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+        }
+
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: #ffffff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 0.95rem;
+        }
+
+        section {
+            margin-bottom: 2.5rem;
+        }
+
+        .item {
+            margin-bottom: 1.5rem;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 0.2rem;
+        }
+
+        .item-title {
+            font-weight: bold;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .item-date {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        .pub-list {
+            list-style-type: decimal;
+            padding-left: 1.5rem;
+        }
+
+        .pub-list li {
+            margin-bottom: 1rem;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 1rem;
+        }
+
+        .skills-category {
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text-muted);
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        @media (max-width: 600px) {
+            .item-header {
+                flex-direction: column;
+            }
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-    <main>
-        <h1>Suvam Pal</h1>
-        <h2>M.Sc in Physics</h2>
-        <img src="suvam.jpg" alt="A photo of Your Name" id="profile-pic">
-        <p>Welcome to my personal page. </p>
-    </main>
-    <section class="content-box" id="research-intro">
-        <h2>My Research</h2>
-        <p>
-            Here you can write your introduction. You could discuss your focus on 
-            statistical physics, stochastic processes, and the dynamics of systems
-            like the Kuramoto and Ising models. 
-        </p>
-        <p>
-            You can add more paragraphs here to detail your work on
-            first-passage time problems, stochastic resetting, or other topics.
-        </p>
+<div class="container">
+    <header>
+        <h1>Suvam Pal, M.Sc.</h1>
+        <div class="subtitle">Senior Research Fellow & Ph.D. Candidate in Statistical Physics</div>
+        
+        <div class="contact-info">
+            <span>✉️ <a href="mailto:suvamjoy256@gmail.com">suvamjoy256@gmail.com</a></span>
+            <span>✉️ <a href="mailto:suvampal_r@isical.ac.in">suvampal_r@isical.ac.in</a></span>
+            <span>📍 Kolkata, West Bengal, India</span>
+        </div>
+    </header>
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>I am a Senior Research Fellow and Ph.D. candidate at the Indian Statistical Institute, Kolkata, specializing in statistical physics. My research primarily explores stochastic resetting, first-passage processes, synchronization dynamics, the Kuramoto model, and swarmalators. I focus on developing analytical and computational frameworks to understand complex systems and transport phenomena.</p>
     </section>
 
-    <div class="simulation-container">
-        <p>Below are some interactive simulations.</p>
-        <div class="sim-wrapper">
-            <h3>Brownian Ants</h3>
-            <canvas id="brownian-canvas" class="sim-canvas"></canvas>
-        </div>
+    <section id="education">
+        <h2>Education</h2>
         
-        <div class="sim-wrapper">
-            <h3>Kuramoto Oscillators</h3>
-            <canvas id="kuramoto-canvas" class="sim-canvas"></canvas>
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">Ph.D., Physics</span>
+                <span class="item-date">2020 – Present</span>
+            </div>
+            <div>Indian Statistical Institute, Kolkata</div>
+            <div><em>Thesis title:</em> Effect of Resetting on Dynamical Systems</div>
         </div>
 
-    </div>
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">M.Sc., Physics (First Class, 7.68 CGPA)</span>
+                <span class="item-date">2018 – 2020</span>
+            </div>
+            <div>Ramakrishna Mission Vivekananda Educational Research Institute, Belur</div>
+            <div><em>Thesis title:</em> Monte Carlo simulation of the 2d ISING MODEL</div>
+        </div>
 
-    <script src="brownian.js"></script>
-    <script src="kuramoto.js"></script>
+        <div class="item">
+            <div class="item-header">
+                <span class="item-title">B.Sc., Physics (First Class, 68%)</span>
+                <span class="item-date">2015 – 2018</span>
+            </div>
+            <div>Hooghly Mohsin College, Burdwan University</div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills & Expertise</h2>
+        <div class="skills-grid">
+            <div class="skills-category">Coding & Computation</div>
+            <div>Fortran, C++, Python, MATLAB, Mathematica, Julia</div>
+            
+            <div class="skills-category">Typesetting</div>
+            <div>TeX formatting, academic publication preparation</div>
+            
+            <div class="skills-category">Miscellaneous</div>
+            <div>Academic research, teaching, training, consultation</div>
+            
+            <div class="skills-category">Languages</div>
+            <div>Bengali, English, Hindi (Strong reading, writing, and speaking competencies)</div>
+        </div>
+    </section>
+
+    <section id="publications">
+        <h2>Research Publications</h2>
+        <ol class="pub-list">
+            <li>S. Pal, R. Das, and A. Pal, "Resetting optimized competitive first-passage outcomes in non-markovian systems," <em>arXiv preprint arXiv:2604.01986</em>, 2026.</li>
+            <li>S. Majhi, S. Ghosh, P. K. Pal, et al., "Patterns of neuronal synchrony in higher-order networks," <em>Physics of Life Reviews</em>, vol. 52, pp. 144-170, 2025.</li>
+            <li>S. Pal, L. Dagdug, D. Ghosh, D. Boyer, and A. Pal, "Universal criterion for selective outcomes under stochastic resetting," <em>Physical Review E</em>, vol. 112, no. 3, p. 034 116, 2025.</li>
+            <li>S. Pal, D. Ghosh, and S. Saha, "Controlling complex rhythms: A hierarchical approach to limit cycle switching," <em>Chaos: An Interdisciplinary Journal of Nonlinear Science</em>, vol. 35, no. 9, 2025.</li>
+            <li>S. Pal and A. Pal, "Optimal resetting mediated universal fluctuations in conditional first-passage times: Application to diffusive transport processes," <em>Physics of Fluids</em>, vol. 37, no. 7, 2025.</li>
+            <li>S. Ghosh, S. Pal, G. K. Sar, and D. Ghosh, "Amplitude responses of swarmalators," <em>Physical Review E</em>, vol. 109, no. 5, p. 054 205, 2024.</li>
+            <li>S. Pal, D. Boyer, L. Dagdug, and A. Pal, "Channel-facilitated transport under resetting dynamics," <em>The Journal of Chemical Physics</em>, vol. 161, no. 14, 2024.</li>
+            <li>S. Pal, G. K. Sar, D. Ghosh, and A. Pal, "Directional synchrony among self-propelled particles under spatial influence," <em>Chaos: An Interdisciplinary Journal of Nonlinear Science</em>, vol. 34, no. 2, 2024.</li>
+        </ol>
+    </section>
+
+    <section id="achievements">
+        <h2>Achievements & Scholarships</h2>
+        <ul>
+            <li><strong>2021:</strong> AIR-30 rank in JEST.</li>
+            <li><strong>2020:</strong> AIR-152 rank in CSIR-NET. AIR-1 rank in ISI test + Interview.</li>
+            <li><strong>2018:</strong> AIR-652 rank in IIT-JAM.</li>
+            <li><strong>Scholarships:</strong> SVMCM Awarded by West Bengal Government (2013-2015, 2015-2018, 2018-2020).</li>
+        </ul>
+    </section>
+
+    <section id="references">
+        <h2>References</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name & Title</th>
+                    <th>Institution</th>
+                    <th>Contact</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Prof. Dibakar Ghosh</strong><br>Professor</td>
+                    <td>Indian Statistical Institute, Kolkata</td>
+                    <td>dibakar@isical.ac.in<br>diba.ghosh@gmail.com</td>
+                </tr>
+                <tr>
+                    <td><strong>Dr. Arnab Pal</strong><br>Reader</td>
+                    <td>Institute of Mathematical Sciences, Chennai</td>
+                    <td>arnabpal@imsc.res.in<br>richard86arnab@gmail.com</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Suvam Pal. All rights reserved.</p>
+    </footer>
+</div>
 
 </body>
 </html>
