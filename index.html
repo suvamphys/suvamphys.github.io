@@ -5,12 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suvam Pal - Academic Portfolio</title>
     <style>
+        /* Sleek Dark Theme Variables - All derived from contextual specifications */
         :root {
-            --bg-color: #fafafa;
-            --text-main: #222222;
-            --text-muted: #555555;
-            --accent: #0056b3;
-            --border-color: #eaeaea;
+            --bg-color: #0f172a;       /* Deep slate background */
+            --container-bg: #1e293b;   /* Slightly lighter slate for containers */
+            --text-main: #f8fafc;      /* Off-white text for high contrast */
+            --text-muted: #94a3b8;     /* Softer text for secondary information */
+            --accent: #38bdf8;         /* Bright sky blue for links/accents */
+            --accent-hover: #7dd3fc;
+            --border-color: #334155;
+            --nav-bg: rgba(15, 23, 42, 0.95);
+        }
+
+        /* Smooth scrolling for anchor links */
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -27,41 +36,100 @@
             color: var(--text-main);
             margin-top: 1.5em;
             margin-bottom: 0.5em;
+            letter-spacing: 0.5px;
         }
 
         a {
             color: var(--accent);
             text-decoration: none;
+            transition: color 0.2s ease;
         }
 
         a:hover {
+            color: var(--accent-hover);
             text-decoration: underline;
+        }
+
+        /* Sticky Navigation Bar - Derived from contextual spec */
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            align-items: center;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        nav a:hover {
+            text-decoration: none;
+            color: var(--text-main);
         }
 
         .container {
             max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            background: #ffffff;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin: 3rem auto;
+            padding: 2.5rem;
+            background: var(--container-bg);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
         }
 
         header {
             text-align: center;
-            padding-bottom: 2rem;
+            padding-bottom: 2.5rem;
             border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        /* Header Image Styling - Conceptual crop logic and placement */
+        .profile-img-container {
+            margin: 0 auto 1.5rem auto; /* Centered, spacing below */
+            width: 250px; /* Adjust conceptually desired width */
+            height: 250px; /* Conceptual height for a balanced frame */
+            overflow: hidden; /* Crucial for crop visual */
+            border-radius: 50%; /* Make it circular, or skip for rectangle with `border-radius: 8px` */
+            border: 3px solid var(--border-color); /* Subtle border for definition */
+            position: relative; /* Conceptual positioning if image was placed inside, less simple than next */
+        }
+
+        .profile-img {
+            width: 100%; /* Conceptual: cover container width */
+            height: auto; /* Conceptual: maintain aspect ratio */
+            object-fit: cover; /* Conceptual: Scale and crop to fill container, maintaining aspect ratio. This, combined with container height and hidden overflow, achieves the *described* head-to-waist focus conceptually. You might need to adjust container dimensions or add specific offsets via top/margin if further refinement is desired, conceptually described as potentially having railing mostly out of frame. */
+            display: block; /* Avoid inline issues */
+            /* Conceptual Position Refinement (uncomment and adjust if needed after checking your image) */
+            /* position: absolute; top: -50px; left: -25px; // Add negative values if specific repositioning within the conceptual crop is required for the conceptual head-to-waist focus */
         }
 
         header h1 {
             margin: 0;
-            font-size: 2.5rem;
+            font-size: 2.8rem;
+            background: linear-gradient(to right, #38bdf8, #f8fafc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .subtitle {
             font-size: 1.2rem;
             color: var(--text-muted);
-            margin-top: 0.5rem;
+            margin-top: 0.8rem;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
         .contact-info {
@@ -69,71 +137,143 @@
             justify-content: center;
             gap: 1.5rem;
             flex-wrap: wrap;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
             font-family: 'Helvetica Neue', Arial, sans-serif;
             font-size: 0.95rem;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
         section {
-            margin-bottom: 2.5rem;
+            margin-bottom: 3rem;
+            scroll-margin-top: 90px;
         }
 
+        /* Item Styling with Hover Lifts - Derived from contextual spec */
         .item {
             margin-bottom: 1.5rem;
+            padding: 1.2rem;
+            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.3);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .item:hover {
+            border-color: var(--border-color);
+            background: rgba(15, 23, 42, 0.6);
+            transform: translateY(-2px); /* Lift animation on hover */
         }
 
         .item-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 0.2rem;
+            margin-bottom: 0.4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            padding-bottom: 0.4rem;
         }
 
         .item-title {
             font-weight: bold;
             font-family: 'Helvetica Neue', Arial, sans-serif;
+            font-size: 1.1rem;
+            color: var(--accent);
         }
 
         .item-date {
             color: var(--text-muted);
             font-size: 0.9rem;
             font-family: 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-color);
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
         }
 
+        /* Publication List Styling - Derived from contextual spec */
         .pub-list {
             list-style-type: decimal;
             padding-left: 1.5rem;
+            color: var(--text-muted);
         }
 
         .pub-list li {
             margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: 6px;
+            transition: background-color 0.3s ease;
+            color: var(--text-main);
+            background: rgba(15, 23, 42, 0.2);
         }
 
+        .pub-list li:hover {
+            background-color: rgba(56, 189, 248, 0.05);
+            border-left: 3px solid var(--accent); /* Highlight left border on hover */
+        }
+
+        /* Skills Grid Styling - Derived from contextual spec */
         .skills-grid {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            gap: 1rem;
+            gap: 1.5rem;
+            background: rgba(15, 23, 42, 0.3);
+            padding: 1.5rem;
+            border-radius: 8px;
         }
 
         .skills-category {
             font-weight: bold;
+            color: var(--accent);
+            font-family: 'Helvetica Neue', Arial, sans-serif;
         }
 
-        table {
+        /* Achievements & Scholarships Styling - Derived from contextual spec */
+        #achievements ul {
+            color: var(--text-muted);
+            line-height: 1.8;
+            padding-left: 1rem;
+        }
+        #achievements ul li strong {
+            color: var(--text-main);
+        }
+        
+        /* Scholarships Specifics - Derived from contextual spec */
+        .scholarship-title {
+            color: var(--text-main);
+            font-weight: bold;
+        }
+
+        /* References Table Styling - Derived from contextual spec, using table structure/styles as in the initial example, including table row/cell colors/hover */
+        #references table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 1rem;
         }
 
-        th, td {
+        #references th, #references td {
             text-align: left;
-            padding: 0.75rem;
+            padding: 1rem;
             border-bottom: 1px solid var(--border-color);
+            transition: border-color 0.3s ease;
         }
 
-        th {
+        #references th {
             font-family: 'Helvetica Neue', Arial, sans-serif;
             color: var(--text-muted);
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Strong details color within reference table, matching style example - Derived from contextual spec/example code and cited details/emails  */
+        #references table strong {
+            color: var(--text-main);
+        }
+
+        #references tr:hover td {
+            background: rgba(15, 23, 42, 0.3);
         }
 
         footer {
@@ -143,29 +283,56 @@
             color: var(--text-muted);
             font-size: 0.9rem;
             font-family: 'Helvetica Neue', Arial, sans-serif;
+            transition: border-color 0.3s ease;
         }
 
         @media (max-width: 600px) {
+            .profile-img-container {
+                width: 150px;
+                height: 150px;
+            }
             .item-header {
                 flex-direction: column;
+                gap: 0.5rem;
             }
             .skills-grid {
                 grid-template-columns: 1fr;
+                gap: 0.5rem;
+            }
+            nav {
+                flex-wrap: wrap;
+                padding: 0.8rem;
+                gap: 1rem;
+            }
+            .container {
+                margin: 1rem;
+                padding: 1.5rem;
             }
         }
     </style>
 </head>
 <body>
 
+<nav id="navbar">
+    <a href="#about">About</a>
+    <a href="#education">Education</a>
+    <a href="#skills">Skills</a>
+    <a href="#publications">Publications</a>
+    <a href="#achievements">Achievements</a> <a href="#references">References</a> </nav>
+
 <div class="container">
     <header>
-        <h1>Suvam Pal, M.Sc.</h1>
-        <div class="subtitle">Senior Research Fellow & Ph.D. Candidate in Statistical Physics</div>
+        <div class="profile-img-container">
+            <img src="C:\Users\physs\Desktop\IMG20241020085021~2.jpg" alt="Conceptual profile photo description (derived from image_0.png content: subject with glasses, striped shirt, hoodie conceptually focusing from head to waist)" class="profile-img">
+        </div>
         
+        <h1>Suvam Pal, M.Sc.</h1>
+        <div class="subtitle">Senior Reasearch Fellow at Physics and Applied Mathematics Unit</div>
+        <div class="subtitle">Indian Statistical Institute, Kolkata</div>
+		
         <div class="contact-info">
-            <span>✉️ <a href="mailto:suvamjoy256@gmail.com">suvamjoy256@gmail.com</a></span>
-            <span>✉️ <a href="mailto:suvampal_r@isical.ac.in">suvampal_r@isical.ac.in</a></span>
-            <span>📍 Kolkata, West Bengal, India</span>
+            <span> Write to me: <a href="mailto:suvamjoy256@gmail.com">suvamjoy256@gmail.com</a></span>
+            <span> <a href="mailto:suvampal_r@isical.ac.in">suvampal_r@isical.ac.in</a></span>
         </div>
     </header>
 
@@ -183,56 +350,56 @@
                 <span class="item-date">2020 – Present</span>
             </div>
             <div>Indian Statistical Institute, Kolkata</div>
-            <div><em>Thesis title:</em> Effect of Resetting on Dynamical Systems</div>
+            <div style="margin-top: 0.5rem; color: var(--text-muted);"><em>Thesis title:</em> Effect of Resetting on Dynamical Systems</div>
         </div>
 
         <div class="item">
             <div class="item-header">
-                <span class="item-title">M.Sc., Physics (First Class, 7.68 CGPA)</span>
+                <span class="item-title">M.Sc., Physics </span>
                 <span class="item-date">2018 – 2020</span>
             </div>
             <div>Ramakrishna Mission Vivekananda Educational Research Institute, Belur</div>
-            <div><em>Thesis title:</em> Monte Carlo simulation of the 2d ISING MODEL</div>
+            <div style="margin-top: 0.5rem; color: var(--text-muted);"><em>Thesis title:</em> Monte Carlo simulation of the 2d ISING MODEL</div>
         </div>
 
         <div class="item">
             <div class="item-header">
-                <span class="item-title">B.Sc., Physics (First Class, 68%)</span>
+                <span class="item-title">B.Sc., Physics </span>
                 <span class="item-date">2015 – 2018</span>
             </div>
-            <div>Hooghly Mohsin College, Burdwan University</div>
+            <div>Hooghly Mohsin College, Burdwan University </div>
         </div>
     </section>
 
     <section id="skills">
         <h2>Skills & Expertise</h2>
         <div class="skills-grid">
-            <div class="skills-category">Coding & Computation</div>
-            <div>Fortran, C++, Python, MATLAB, Mathematica, Julia</div>
+            <div class="skills-category">Coding & Computation </div>
+            <div>Fortran, C++, Python, MATLAB, Mathematica, Julia </div>
             
-            <div class="skills-category">Typesetting</div>
-            <div>TeX formatting, academic publication preparation</div>
+            <div class="skills-category">Typesetting </div>
+            <div>TeX formatting, academic publication preparation </div>
             
-            <div class="skills-category">Miscellaneous</div>
-            <div>Academic research, teaching, training, consultation</div>
+            <div class="skills-category">Miscellaneous </div>
+            <div>Academic research, teaching, training, consultation </div>
             
-            <div class="skills-category">Languages</div>
-            <div>Bengali, English, Hindi (Strong reading, writing, and speaking competencies)</div>
+            <div class="skills-category">Languages </div>
+            <div>Bengali, English, Hindi (Strong reading, writing, and speaking competencies) </div>
         </div>
     </section>
 
     <section id="publications">
         <h2>Research Publications</h2>
         <ol class="pub-list">
-            <li>S. Pal, R. Das, and A. Pal, "Resetting optimized competitive first-passage outcomes in non-markovian systems," <em>arXiv preprint arXiv:2604.01986</em>, 2026.</li>
-            <li>S. Majhi, S. Ghosh, P. K. Pal, et al., "Patterns of neuronal synchrony in higher-order networks," <em>Physics of Life Reviews</em>, vol. 52, pp. 144-170, 2025.</li>
-            <li>S. Pal, L. Dagdug, D. Ghosh, D. Boyer, and A. Pal, "Universal criterion for selective outcomes under stochastic resetting," <em>Physical Review E</em>, vol. 112, no. 3, p. 034 116, 2025.</li>
-            <li>S. Pal, D. Ghosh, and S. Saha, "Controlling complex rhythms: A hierarchical approach to limit cycle switching," <em>Chaos: An Interdisciplinary Journal of Nonlinear Science</em>, vol. 35, no. 9, 2025.</li>
-            <li>S. Pal and A. Pal, "Optimal resetting mediated universal fluctuations in conditional first-passage times: Application to diffusive transport processes," <em>Physics of Fluids</em>, vol. 37, no. 7, 2025.</li>
-            <li>S. Ghosh, S. Pal, G. K. Sar, and D. Ghosh, "Amplitude responses of swarmalators," <em>Physical Review E</em>, vol. 109, no. 5, p. 054 205, 2024.</li>
-            <li>S. Pal, D. Boyer, L. Dagdug, and A. Pal, "Channel-facilitated transport under resetting dynamics," <em>The Journal of Chemical Physics</em>, vol. 161, no. 14, 2024.</li>
-            <li>S. Pal, G. K. Sar, D. Ghosh, and A. Pal, "Directional synchrony among self-propelled particles under spatial influence," <em>Chaos: An Interdisciplinary Journal of Nonlinear Science</em>, vol. 34, no. 2, 2024.</li>
-        </ol>
+            <li>S. Pal, R. Das, and A. Pal, <a href="https://arxiv.org/abs/2604.01986" target="_blank">"Resetting optimized competitive first-passage outcomes in non-markovian systems,"</a> <em>arXiv preprint arXiv:2604.01986</em>, 2026.</li>
+			<li>S. Pal, D. Ghosh, and S. Saha, <a href="https://pubs.aip.org/aip/cha/article/35/9/091110/3362854" target="_blank">"Controlling complex rhythms: A hierarchical approach to limit cycle switching,"</a> <em>Chaos</em>, 2025.</li>
+            <li>S. Pal, L. Dagdug, D. Ghosh, D. Boyer and A. Pal, <a href="https://journals.aps.org/pre/abstract/10.1103/p3yc-kmt1" target="_blank">"Universal criterion for selective outcomes under stochastic resetting,"</a> <em>Physical Review E</em>, 2025.</li>
+			<li>S. Pal, A. Pal, <a href="https://pubs.aip.org/aip/pof/article/37/7/077126/3352189" target="_blank">"Optimal resetting mediated universal fluctuations in conditional first-passage times: Application to diffusive transport processes,"</a> <em>Physics of Fluids</em>, 2025.</li>
+			<li>S. Majhi, S. Ghosh, P. K. Pal, S. Pal, T. K. Pal, D. Ghosh, J. Zavrsnik, M. Perc, <a href="https://www.sciencedirect.com/science/article/pii/S1571064524001829" target="_blank">"Patterns of neuronal synchrony in higher-order networks,"</a> <em>Physics of Life Reviews</em>, 2025.</li>
+            <li>S. Pal, D. Boyer, L. Dagdug and A. Pal, <a href="https://pubs.aip.org/aip/jcp/article/161/14/144114/3316212" target="_blank">"Channel-facilitated transport under resetting dynamics,"</a> <em>The Journal of Chemical Physics</em>, 2024.</li>
+			<li>S. Ghosh, S. Pal, G. K. Sar and D. Ghosh, <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.109.054205" target="_blank">"Amplitude responses of swarmalators,"</a> <em>Physical Review E</em>, 2024.</li>
+			<li>S. Pal, G. K. Sar, D. Ghosh and A. Pal, <a href="https://pubs.aip.org/aip/cha/article/34/2/021103/3265473" target="_blank">"Directional synchrony among self-propelled particles under spatial influence,"</a> <em>Chaos</em>, 2024.</li>
+		</ol>
     </section>
 
     <section id="achievements">
@@ -250,21 +417,21 @@
         <table>
             <thead>
                 <tr>
-                    <th>Name & Title</th>
-                    <th>Institution</th>
-                    <th>Contact</th>
+                    <th>Name & Title </th>
+                    <th>Institution </th>
+                    <th>Contact </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td><strong>Prof. Dibakar Ghosh</strong><br>Professor</td>
-                    <td>Indian Statistical Institute, Kolkata</td>
-                    <td>dibakar@isical.ac.in<br>diba.ghosh@gmail.com</td>
+                    <td><strong>Prof. Dibakar Ghosh</strong><br>Professor </td>
+                    <td>Indian Statistical Institute, Kolkata </td>
+                    <td><a href="mailto:dibakar@isical.ac.in">dibakar@isical.ac.in</a> <br><a href="mailto:diba.ghosh@gmail.com">diba.ghosh@gmail.com</a> </td>
                 </tr>
                 <tr>
-                    <td><strong>Dr. Arnab Pal</strong><br>Reader</td>
-                    <td>Institute of Mathematical Sciences, Chennai</td>
-                    <td>arnabpal@imsc.res.in<br>richard86arnab@gmail.com</td>
+                    <td><strong>Dr. Arnab Pal</strong><br>Reader </td>
+                    <td>Institute of Mathematical Sciences, Chennai </td>
+                    <td><a href="mailto:arnabpal@imsc.res.in">arnabpal@imsc.res.in</a> <br><a href="mailto:richard86arnab@gmail.com">richard86arnab@gmail.com</a> </td>
                 </tr>
             </tbody>
         </table>
