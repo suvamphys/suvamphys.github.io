@@ -5,442 +5,857 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suvam Pal - Academic Portfolio</title>
     <style>
-        /* Sleek Dark Theme Variables - All derived from contextual specifications */
+        /* Base Styles & Typography */
         :root {
-            --bg-color: #0f172a;       /* Deep slate background */
-            --container-bg: #1e293b;   /* Slightly lighter slate for containers */
-            --text-main: #f8fafc;      /* Off-white text for high contrast */
-            --text-muted: #94a3b8;     /* Softer text for secondary information */
-            --accent: #38bdf8;         /* Bright sky blue for links/accents */
-            --accent-hover: #7dd3fc;
-            --border-color: #334155;
-            --nav-bg: rgba(15, 23, 42, 0.95);
+            /* --- PREMIUM DEEP DARK THEME COLORS --- */
+            --text-main: #F1F5F9;     /* Crisp light slate for primary text */
+            --text-muted: #94A3B8;    /* Softer slate for secondary text */
+            --border-color: #1E293B;  /* Rich slate border */
+            
+            --bg-color: #020617;      /* Ultra-deep midnight background */
+            --bg-card: #0F172A;       /* Elevated dark slate for cards */
+            --bg-tag: #1E293B;        /* Background for tags */
+            
+            --accent: #38BDF8;        /* Vibrant sky blue for maximum pop */
+            --accent-gradient: linear-gradient(135deg, #38BDF8, #818CF8); /* Sky to Indigo */
         }
 
-        /* Smooth scrolling for anchor links */
-        html {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Georgia', serif;
-            line-height: 1.6;
-            color: var(--text-main);
             background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-        }
-
-        h1, h2, h3, h4 {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
             color: var(--text-main);
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-            letter-spacing: 0.5px;
+            line-height: 1.6;
+            padding-bottom: 4rem;
+            overflow-x: hidden;
         }
 
         a {
-            color: var(--accent);
             text-decoration: none;
-            transition: color 0.2s ease;
+            color: var(--accent);
+            transition: opacity 0.2s, background-color 0.2s, color 0.2s;
         }
 
         a:hover {
-            color: var(--accent-hover);
+            opacity: 0.8;
             text-decoration: underline;
         }
 
-        /* Sticky Navigation Bar - Derived from contextual spec */
+        /* Navigation */
         nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 5%;
+            border-bottom: 1px solid var(--border-color);
             position: sticky;
             top: 0;
-            background-color: var(--nav-bg);
-            backdrop-filter: blur(8px);
-            padding: 1rem 0;
-            border-bottom: 1px solid var(--border-color);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            align-items: center;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            background-color: rgba(2, 6, 23, 0.85); /* Matches ultra-deep bg with blur */
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            z-index: 100;
         }
 
-        nav a {
-            font-weight: 500;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-        }
-
-        nav a:hover {
-            text-decoration: none;
+        .nav-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
             color: var(--text-main);
+            letter-spacing: 0.5px;
         }
 
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            text-decoration: none;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s, border-color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--text-main);
+            border-bottom: 2px solid var(--accent);
+            text-decoration: none;
+        }
+
+        /* Main Container */
         .container {
-            max-width: 800px;
-            margin: 3rem auto;
-            padding: 2.5rem;
-            background: var(--container-bg);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-            border-radius: 12px;
-            border: 1px solid var(--border-color);
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
         }
 
-        header {
-            text-align: center;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--border-color);
-            margin-bottom: 2.5rem;
+        /* Animation Classes */
+        .fade {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
 
-        /* Header Image Styling - Conceptual crop logic and placement */
-        .profile-img-container {
-            margin: 0 auto 1.5rem auto; /* Centered, spacing below */
-            width: 250px; /* Adjust conceptually desired width */
-            height: 250px; /* Conceptual height for a balanced frame */
-            overflow: hidden; /* Crucial for crop visual */
-            border-radius: 50%; /* Make it circular, or skip for rectangle with `border-radius: 8px` */
-            border: 3px solid var(--border-color); /* Subtle border for definition */
-            position: relative; /* Conceptual positioning if image was placed inside, less simple than next */
+        .fade.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hero Section */
+        .hero {
+            display: flex;
+            align-items: flex-start;
+            gap: 3.5rem;
+            margin-bottom: 5rem;
         }
 
         .profile-img {
-            width: 100%; /* Conceptual: cover container width */
-            height: auto; /* Conceptual: maintain aspect ratio */
-            object-fit: cover; /* Conceptual: Scale and crop to fill container, maintaining aspect ratio. This, combined with container height and hidden overflow, achieves the *described* head-to-waist focus conceptually. You might need to adjust container dimensions or add specific offsets via top/margin if further refinement is desired, conceptually described as potentially having railing mostly out of frame. */
-            display: block; /* Avoid inline issues */
-            /* Conceptual Position Refinement (uncomment and adjust if needed after checking your image) */
-            /* position: absolute; top: -50px; left: -25px; // Add negative values if specific repositioning within the conceptual crop is required for the conceptual head-to-waist focus */
-        }
-
-        header h1 {
-            margin: 0;
-            font-size: 2.8rem;
-            background: linear-gradient(to right, #38bdf8, #f8fafc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            margin-top: 0.8rem;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 0.95rem;
-            background: rgba(15, 23, 42, 0.5);
-            padding: 1rem;
-            border-radius: 8px;
+            width: 240px;
+            height: 240px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
             border: 1px solid var(--border-color);
+            flex-shrink: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        section {
-            margin-bottom: 3rem;
-            scroll-margin-top: 90px;
+        .profile-img:hover {
+            transform: scale(1.05) rotate(-1deg);
         }
 
-        /* Item Styling with Hover Lifts - Derived from contextual spec */
-        .item {
+        .hero-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.2rem;
+            letter-spacing: -0.025em;
+            color: #ffffff;
+        }
+
+        .hero-content h2 {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--accent);
             margin-bottom: 1.5rem;
-            padding: 1.2rem;
+            min-height: 2rem;
+        }
+
+        .typing {
+            border-right: 2px solid var(--accent);
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent); }
+        }
+
+        .about-text {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 750px;
+            line-height: 1.8;
+        }
+        
+        /* Contact & Social Links */
+        .contact-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-link {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1rem;
+            color: #ffffff;
+            background: var(--accent-gradient);
+            padding: 0.6rem 1.5rem;
             border-radius: 8px;
-            background: rgba(15, 23, 42, 0.3);
-            border: 1px solid transparent;
+            box-shadow: 0 4px 14px 0 rgba(56, 189, 248, 0.39);
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: fit-content;
+        }
+
+        .contact-link:hover {
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.5);
+            color: #ffffff;
+        }
+        
+        .contact-link svg {
+            margin-left: 0.6rem;
+            width: 18px;
+            height: 18px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            background-color: var(--bg-card);
+            padding: 0.5rem 1.2rem;
+            border-radius: 20px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            color: var(--accent);
+            border-color: var(--accent);
+            background-color: rgba(56, 189, 248, 0.05);
+            text-decoration: none;
+        }
+
+        /* Standalone Section Headers */
+        section {
+            padding-top: 2rem; 
+            margin-top: -2rem;
+        }
+
+        .section-header {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-header::after {
+            content: "";
+            height: 2px;
+            flex-grow: 1;
+            background: var(--border-color);
+            margin-left: 1rem;
+            border-radius: 2px;
+        }
+
+        /* Research Expertise Text Block */
+        .expertise-block {
+            margin-bottom: 4rem;
+        }
+
+        .expertise-block p {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            max-width: 950px;
+            margin-bottom: 1rem;
+        }
+
+        /* Affiliation Links Styling */
+        .affiliations-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 2rem;
+            max-width: 950px;
+        }
+        
+        .affiliation-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .affiliation-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--accent-gradient);
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .affiliation-card:hover {
+            border-color: #334155;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+            transform: translateX(6px);
+            text-decoration: none;
+        }
+
+        .affiliation-card:hover::before {
+            opacity: 1;
+        }
+
+        .affiliation-title {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .affiliation-leader {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .affiliation-leader span {
+            color: var(--text-main);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .affiliation-card:hover .affiliation-leader span {
+            color: var(--accent);
+        }
+
+        /* Boxed Publications Styling */
+        .publications-block {
+            margin-bottom: 5rem;
+        }
+
+        .pub-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem; 
+            max-width: 1000px;
+        }
+
+        .pub-box {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
             transition: all 0.3s ease;
         }
 
-        .item:hover {
-            border-color: var(--border-color);
-            background: rgba(15, 23, 42, 0.6);
-            transform: translateY(-2px); /* Lift animation on hover */
+        .pub-box:hover {
+            border-color: #334155;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+            transform: translateY(-3px);
         }
 
-        .item-header {
+        .pub-title {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .pub-authors {
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .pub-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pub-journal {
+            font-style: italic;
+            color: #E2E8F0; /* Slightly brighter for journal name */
+        }
+
+        /* 2-Column Grid Layout for Info Cards */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 1.5rem;
+            margin-bottom: 5rem;
+        }
+
+        .card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: #334155;
+            box-shadow: 0 15px 25px -5px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            color: #ffffff;
+        }
+
+        /* Education Specifics */
+        .edu-item {
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 1.25rem;
+        }
+        
+        .edu-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        .edu-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .edu-item strong {
+            display: block;
+            color: #ffffff;
+            font-size: 1.05rem;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Skill Bar Chart Styling */
+        .skill-bar-container {
+            margin-bottom: 1.25rem;
+        }
+        
+        .skill-bar-container:last-child {
+            margin-bottom: 0;
+        }
+
+        .skill-info {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 0.4rem;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-            padding-bottom: 0.4rem;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+            color: #ffffff;
+            font-weight: 500;
         }
 
-        .item-title {
-            font-weight: bold;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            font-size: 1.1rem;
+        .skill-info span:last-child {
             color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 700;
         }
 
-        .item-date {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            background: var(--bg-color);
+        .skill-progress-bg {
+            width: 100%;
+            height: 6px;
+            background-color: var(--bg-tag);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .skill-progress-fill {
+            height: 100%;
+            width: 0;
+            background: var(--accent-gradient);
+            border-radius: 4px;
+            transition: width 1.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Awards & Scholarships Grid */
+        .awards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .award-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .award-card:hover {
+            border-color: #334155;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.4);
+            transform: translateY(-4px);
+        }
+
+        .award-year {
+            font-size: 0.85rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: rgba(56, 189, 248, 0.1);
             padding: 0.2rem 0.6rem;
             border-radius: 4px;
+            width: fit-content;
         }
 
-        /* Publication List Styling - Derived from contextual spec */
-        .pub-list {
-            list-style-type: decimal;
-            padding-left: 1.5rem;
+        .award-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
+        }
+
+        .award-desc {
+            font-size: 0.95rem;
             color: var(--text-muted);
+            line-height: 1.6;
         }
 
-        .pub-list li {
-            margin-bottom: 1rem;
-            padding: 0.8rem;
-            border-radius: 6px;
-            transition: background-color 0.3s ease;
-            color: var(--text-main);
-            background: rgba(15, 23, 42, 0.2);
-        }
-
-        .pub-list li:hover {
-            background-color: rgba(56, 189, 248, 0.05);
-            border-left: 3px solid var(--accent); /* Highlight left border on hover */
-        }
-
-        /* Skills Grid Styling - Derived from contextual spec */
-        .skills-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 1.5rem;
-            background: rgba(15, 23, 42, 0.3);
-            padding: 1.5rem;
-            border-radius: 8px;
-        }
-
-        .skills-category {
-            font-weight: bold;
-            color: var(--accent);
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-        }
-
-        /* Achievements & Scholarships Styling - Derived from contextual spec */
-        #achievements ul {
-            color: var(--text-muted);
-            line-height: 1.8;
-            padding-left: 1rem;
-        }
-        #achievements ul li strong {
-            color: var(--text-main);
-        }
-        
-        /* Scholarships Specifics - Derived from contextual spec */
-        .scholarship-title {
-            color: var(--text-main);
-            font-weight: bold;
-        }
-
-        /* References Table Styling - Derived from contextual spec, using table structure/styles as in the initial example, including table row/cell colors/hover */
-        #references table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-
-        #references th, #references td {
-            text-align: left;
-            padding: 1rem;
-            border-bottom: 1px solid var(--border-color);
-            transition: border-color 0.3s ease;
-        }
-
-        #references th {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-        }
-        
-        /* Strong details color within reference table, matching style example - Derived from contextual spec/example code and cited details/emails  */
-        #references table strong {
-            color: var(--text-main);
-        }
-
-        #references tr:hover td {
-            background: rgba(15, 23, 42, 0.3);
-        }
-
-        footer {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border-color);
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            font-family: 'Helvetica Neue', Arial, sans-serif;
-            transition: border-color 0.3s ease;
-        }
-
-        @media (max-width: 600px) {
-            .profile-img-container {
-                width: 150px;
-                height: 150px;
-            }
-            .item-header {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-            .skills-grid {
+        /* Responsive Design */
+        @media (max-width: 900px) {
+            .info-grid {
                 grid-template-columns: 1fr;
-                gap: 0.5rem;
             }
-            nav {
-                flex-wrap: wrap;
-                padding: 0.8rem;
-                gap: 1rem;
+            .hero {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 2rem;
             }
-            .container {
-                margin: 1rem;
-                padding: 1.5rem;
+            .hero-content {
+                align-items: center;
+            }
+            .nav-links {
+                display: none;
+            }
+            .contact-group {
+                justify-content: center;
+            }
+            .section-header::after {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
 
-<nav id="navbar">
-    <a href="#about">About</a>
-    <a href="#education">Education</a>
-    <a href="#skills">Skills</a>
-    <a href="#publications">Publications</a>
-    <a href="#achievements">Achievements</a> <a href="#references">References</a> </nav>
-
-<div class="container">
-    <header>
-        <div class="profile-img-container">
-            <img src="suvam.jpg" alt="Conceptual profile photo description (derived from image_0.png content: subject with glasses, striped shirt, hoodie conceptually focusing from head to waist)" class="profile-img">
+    <nav>
+        <div class="nav-logo">Suvam Pal</div>
+        <div class="nav-links">
+            <a href="#about" class="active">About</a>
+            <a href="#expertise">Expertise</a>
+            <a href="#publications">Publications</a>
+            <a href="#education">Education & Skills</a>
+            <a href="#awards">Awards</a>
         </div>
+    </nav>
+
+    <div class="container">
         
-        <h1>Suvam Pal, M.Sc.</h1>
-        <div class="subtitle">Senior Reasearch Fellow at Physics and Applied Mathematics Unit</div>
-        <div class="subtitle">Indian Statistical Institute, Kolkata</div>
-		
-        <div class="contact-info">
-            <span> Write to me: <a href="mailto:suvamjoy256@gmail.com">suvamjoy256@gmail.com</a></span>
-            <span> <a href="mailto:suvampal_r@isical.ac.in">suvampal_r@isical.ac.in</a></span>
-        </div>
-    </header>
+        <section class="hero fade" id="about">
+            <img src="suvam.jpg" alt="Suvam Pal - Formal representation (Bald, wearing a t-shirt)" class="profile-img">
+            <div class="hero-content">
+                <h1>Suvam Pal, M.Sc.</h1>
+                <h2 class="typing" id="typed-text"></h2>
+                
+                <p class="about-text">
+                    I am a Senior Research Fellow and Ph.D. candidate at the Indian Statistical Institute, Kolkata. I focus on developing analytical and computational frameworks to understand complex systems and transport phenomena.
+                </p>
 
-    <section id="about">
-        <h2>About Me</h2>
-        <p>I am a Senior Research Fellow and Ph.D. candidate at the Indian Statistical Institute, Kolkata, specializing in statistical physics. My research primarily explores stochastic resetting, first-passage processes, synchronization dynamics, the Kuramoto model, and swarmalators. I focus on developing analytical and computational frameworks to understand complex systems and transport phenomena.</p>
-    </section>
+                <div class="contact-group">
+                    <a href="mailto:suvamjoy256@gmail.com" class="contact-link">
+                        suvamjoy256@gmail.com 
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    </a>
+                    <a href="https://scholar.google.com/citations?user=cBZ3raEAAAAJ&hl=en" target="_blank" class="social-link">Google Scholar</a>
+                    <a href="https://www.researchgate.net/profile/Suvam-Pal?ev=hdr_xprf" target="_blank" class="social-link">ResearchGate</a>
+                    <a href="https://www.linkedin.com/in/suvam-pal-578a6b1b2/" target="_blank" class="social-link">LinkedIn</a>
+                </div>
+            </div>
+        </section>
 
-    <section id="education">
-        <h2>Education</h2>
+        <section class="expertise-block fade" id="expertise">
+            <h2 class="section-header">Research Expertise</h2>
+            <p>
+                My research expertise is deeply rooted in non-equilibrium statistical physics, with a heavy focus on the intricate dynamics of complex systems. I actively investigate stochastic resetting and first-passage processes to uncover universal criteria, fluctuations, and optimal outcomes in transport phenomena.
+            </p>
+            <p>
+                Additionally, a significant portion of my work explores synchronization dynamics. Through the lens of the Kuramoto model and swarmalators, my research aims to decode complex rhythms, limit cycle switching, and the directional synchrony of self-propelled, interacting particles.
+            </p>
+
+            <h3 style="font-size: 1.25rem; font-weight: 600; color: #ffffff; margin-top: 2.5rem; margin-bottom: 0.5rem;">Research Affiliations</h3>
+            <div class="affiliations-group">
+                <a href="https://sites.google.com/view/arnab-pal/home?authuser=0" target="_blank" class="affiliation-card">
+                    <div class="affiliation-title">Stochastic Dynamics and Out-of-Equilibrium Group</div>
+                    <div class="affiliation-leader">Group Leader: <span>Dr. Arnab Pal</span></div>
+                </a>
+                <a href="https://isi.irins.org/profile/111449/" target="_blank" class="affiliation-card">
+                    <div class="affiliation-title">Complex Systems Lab, ISI Kolkata</div>
+                    <div class="affiliation-leader">Group Leader: <span>Prof. Dibakar Ghosh</span></div>
+                </a>
+            </div>
+        </section>
+
+        <section class="publications-block fade" id="publications">
+            <h2 class="section-header">Publications</h2>
+            <div class="pub-list">
+                
+                <div class="pub-box fade">
+                    <a href="https://arxiv.org/abs/2604.01986" target="_blank" class="pub-title">Resetting optimized competitive first-passage outcomes in non-markovian systems</a>
+                    <div class="pub-authors">S. Pal, R. Das, and A. Pal</div>
+                    <div class="pub-meta"><span class="pub-journal">arXiv preprint arXiv:2604.01986</span>&nbsp;• 2026</div>
+                </div>
+
+                <div class="pub-box fade">
+                    <a href="https://pubs.aip.org/aip/cha/article/35/9/091110/3362854" target="_blank" class="pub-title">Controlling complex rhythms: A hierarchical approach to limit cycle switching</a>
+                    <div class="pub-authors">S. Pal, D. Ghosh, and S. Saha</div>
+                    <div class="pub-meta"><span class="pub-journal">Chaos</span>&nbsp;• 2025</div>
+                </div>
+
+                <div class="pub-box fade">
+                    <a href="https://journals.aps.org/pre/abstract/10.1103/p3yc-kmt1" target="_blank" class="pub-title">Universal criterion for selective outcomes under stochastic resetting</a>
+                    <div class="pub-authors">S. Pal, L. Dagdug, D. Ghosh, D. Boyer and A. Pal</div>
+                    <div class="pub-meta"><span class="pub-journal">Physical Review E</span>&nbsp;• 2025</div>
+                </div>
+
+                <div class="pub-box fade">
+                    <a href="https://pubs.aip.org/aip/pof/article/37/7/077126/3352189" target="_blank" class="pub-title">Optimal resetting mediated universal fluctuations in conditional first-passage times: Application to diffusive transport processes</a>
+                    <div class="pub-authors">S. Pal, A. Pal</div>
+                    <div class="pub-meta"><span class="pub-journal">Physics of Fluids</span>&nbsp;• 2025</div>
+                </div>
+
+                <div class="pub-box fade">
+                    <a href="https://www.sciencedirect.com/science/article/pii/S1571064524001829" target="_blank" class="pub-title">Patterns of neuronal synchrony in higher-order networks</a>
+                    <div class="pub-authors">S. Majhi, S. Ghosh, P. K. Pal, S. Pal, T. K. Pal, D. Ghosh, J. Zavrsnik, M. Perc</div>
+                    <div class="pub-meta"><span class="pub-journal">Physics of Life Reviews</span>&nbsp;• 2025</div>
+                </div>
+
+                <div class="pub-box fade">
+                    <a href="https://pubs.aip.org/aip/jcp/article/161/14/144114/3316212" target="_blank" class="pub-title">Channel-facilitated transport under resetting dynamics</a>
+                    <div class="pub-authors">S. Pal, D. Boyer, L. Dagdug and A. Pal</div>
+                    <div class="pub-meta"><span class="pub-journal">The Journal of Chemical Physics</span>&nbsp;• 2024</div>
+                </div>
+
+                <div class="pub-box fade">
+                    <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.109.054205" target="_blank" class="pub-title">Amplitude responses of swarmalators</a>
+                    <div class="pub-authors">S. Ghosh, S. Pal, G. K. Sar and D. Ghosh</div>
+                    <div class="pub-meta"><span class="pub-journal">Physical Review E</span>&nbsp;• 2024</div>
+                </div>
+
+                <div class="pub-box fade">
+                    <a href="https://pubs.aip.org/aip/cha/article/34/2/021103/3265473" target="_blank" class="pub-title">Directional synchrony among self-propelled particles under spatial influence</a>
+                    <div class="pub-authors">S. Pal, G. K. Sar, D. Ghosh and A. Pal</div>
+                    <div class="pub-meta"><span class="pub-journal">Chaos</span>&nbsp;• 2024</div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="info-grid" id="education">
+            
+            <div class="card fade">
+                <h3>Education</h3>
+                <div class="edu-item">
+                    <strong>Ph.D. Research Fellow, Physics</strong>
+                    Indian Statistical Institute, Kolkata<br>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">2020 – Present</span>
+                </div>
+                <div class="edu-item">
+                    <strong>M.Sc. Degree in Physics</strong>
+                    RKMVERI, Belur<br>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">2018 – 2020</span>
+                </div>
+                <div class="edu-item">
+                    <strong>B.Sc. Degree in Physics</strong>
+                    Hooghly Mohsin College<br>
+                    <span style="color: var(--text-muted); font-size: 0.9rem;">2015 – 2018</span>
+                </div>
+            </div>
+
+            <div class="card fade" id="skills-card">
+                <h3>Technical Skills</h3>
+                
+                <div class="skill-bar-container">
+                    <div class="skill-info"><span>Python</span><span>95%</span></div>
+                    <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="95%"></div></div>
+                </div>
+
+                <div class="skill-bar-container">
+                    <div class="skill-info"><span>Fortran</span><span>90%</span></div>
+                    <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="90%"></div></div>
+                </div>
+
+                <div class="skill-bar-container">
+                    <div class="skill-info"><span>MATLAB</span><span>85%</span></div>
+                    <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="85%"></div></div>
+                </div>
+
+                <div class="skill-bar-container">
+                    <div class="skill-info"><span>C++</span><span>80%</span></div>
+                    <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="80%"></div></div>
+                </div>
+
+                <div class="skill-bar-container">
+                    <div class="skill-info"><span>Mathematica</span><span>75%</span></div>
+                    <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="75%"></div></div>
+                </div>
+
+                <div class="skill-bar-container">
+                    <div class="skill-info"><span>Julia</span><span>60%</span></div>
+                    <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="60%"></div></div>
+                </div>
+
+                <div class="skill-bar-container">
+                    <div class="skill-info"><span>LaTeX</span><span>95%</span></div>
+                    <div class="skill-progress-bg"><div class="skill-progress-fill" data-width="95%"></div></div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section id="awards">
+            <h2 class="section-header fade">Awards & Scholarships</h2>
+            <div class="awards-grid">
+                
+                <div class="award-card fade">
+                    <div class="award-year">2021</div>
+                    <div class="award-title">AIR-30 Rank</div>
+                    <div class="award-desc">Joint Entrance Screening Test (JEST)</div>
+                </div>
+
+                <div class="award-card fade">
+                    <div class="award-year">2020</div>
+                    <div class="award-title">AIR-152 Rank</div>
+                    <div class="award-desc">CSIR-NET</div>
+                </div>
+
+                <div class="award-card fade">
+                    <div class="award-year">2020</div>
+                    <div class="award-title">AIR-1 Rank</div>
+                    <div class="award-desc">ISI Entrance Test + Interview</div>
+                </div>
+
+                <div class="award-card fade">
+                    <div class="award-year">2018</div>
+                    <div class="award-title">AIR-652 Rank</div>
+                    <div class="award-desc">IIT-JAM</div>
+                </div>
+
+                <div class="award-card fade" style="grid-column: 1 / -1;">
+                    <div class="award-year">2013 - 2020</div>
+                    <div class="award-title">SVMCM Scholarship</div>
+                    <div class="award-desc">Awarded by the West Bengal Government spanning periods 2013-2015, 2015-2018, and 2018-2020.</div>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // 1. Typing Effect for Hero Subtitle
+        const typingText = "Senior Research Fellow at ISI Kolkata | Complex Systems & Statistical Physics";
+        const typingElement = document.getElementById("typed-text");
+        let i = 0;
         
-        <div class="item">
-            <div class="item-header">
-                <span class="item-title">Ph.D., Physics</span>
-                <span class="item-date">2020 – Present</span>
-            </div>
-            <div>Indian Statistical Institute, Kolkata</div>
-            <div style="margin-top: 0.5rem; color: var(--text-muted);"><em>Thesis title:</em> Effect of Resetting on Dynamical Systems</div>
-        </div>
+        function typeWriter() {
+            if (i < typingText.length) {
+                typingElement.innerHTML += typingText.charAt(i);
+                i++;
+                setTimeout(typeWriter, 40); // typing speed
+            } else {
+                typingElement.classList.remove('typing');
+            }
+        }
+        
+        // Start typing slightly after page load
+        setTimeout(typeWriter, 500);
 
-        <div class="item">
-            <div class="item-header">
-                <span class="item-title">M.Sc., Physics </span>
-                <span class="item-date">2018 – 2020</span>
-            </div>
-            <div>Ramakrishna Mission Vivekananda Educational Research Institute, Belur</div>
-            <div style="margin-top: 0.5rem; color: var(--text-muted);"><em>Thesis title:</em> Monte Carlo simulation of the 2d ISING MODEL</div>
-        </div>
+        // 2. Intersection Observer for Scroll Animations (Fade-ins and Skill Bars)
+        const animationOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
 
-        <div class="item">
-            <div class="item-header">
-                <span class="item-title">B.Sc., Physics </span>
-                <span class="item-date">2015 – 2018</span>
-            </div>
-            <div>Hooghly Mohsin College, Burdwan University </div>
-        </div>
-    </section>
+        const scrollObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Trigger fade-in
+                    entry.target.classList.add("show");
+                    
+                    // Trigger skill bar animation if it's the skills card
+                    if(entry.target.id === "skills-card") {
+                        const skillBars = entry.target.querySelectorAll(".skill-progress-fill");
+                        skillBars.forEach(bar => {
+                            bar.style.width = bar.getAttribute("data-width");
+                        });
+                    }
+                    
+                    // Stop observing once animated to prevent re-triggering
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, animationOptions);
 
-    <section id="skills">
-        <h2>Skills & Expertise</h2>
-        <div class="skills-grid">
-            <div class="skills-category">Coding & Computation </div>
-            <div>Fortran, C++, Python, MATLAB, Mathematica, Julia </div>
-            
-            <div class="skills-category">Typesetting </div>
-            <div>TeX formatting, academic publication preparation </div>
-            
-            <div class="skills-category">Miscellaneous </div>
-            <div>Academic research, teaching, training, consultation </div>
-            
-            <div class="skills-category">Languages </div>
-            <div>Bengali, English, Hindi (Strong reading, writing, and speaking competencies) </div>
-        </div>
-    </section>
+        // Apply observer to all elements with .fade class
+        document.querySelectorAll(".fade").forEach(element => {
+            scrollObserver.observe(element);
+        });
 
-    <section id="publications">
-        <h2>Research Publications</h2>
-        <ol class="pub-list">
-            <li>S. Pal, R. Das, and A. Pal, <a href="https://arxiv.org/abs/2604.01986" target="_blank">"Resetting optimized competitive first-passage outcomes in non-markovian systems,"</a> <em>arXiv preprint arXiv:2604.01986</em>, 2026.</li>
-			<li>S. Pal, D. Ghosh, and S. Saha, <a href="https://pubs.aip.org/aip/cha/article/35/9/091110/3362854" target="_blank">"Controlling complex rhythms: A hierarchical approach to limit cycle switching,"</a> <em>Chaos</em>, 2025.</li>
-            <li>S. Pal, L. Dagdug, D. Ghosh, D. Boyer and A. Pal, <a href="https://journals.aps.org/pre/abstract/10.1103/p3yc-kmt1" target="_blank">"Universal criterion for selective outcomes under stochastic resetting,"</a> <em>Physical Review E</em>, 2025.</li>
-			<li>S. Pal, A. Pal, <a href="https://pubs.aip.org/aip/pof/article/37/7/077126/3352189" target="_blank">"Optimal resetting mediated universal fluctuations in conditional first-passage times: Application to diffusive transport processes,"</a> <em>Physics of Fluids</em>, 2025.</li>
-			<li>S. Majhi, S. Ghosh, P. K. Pal, S. Pal, T. K. Pal, D. Ghosh, J. Zavrsnik, M. Perc, <a href="https://www.sciencedirect.com/science/article/pii/S1571064524001829" target="_blank">"Patterns of neuronal synchrony in higher-order networks,"</a> <em>Physics of Life Reviews</em>, 2025.</li>
-            <li>S. Pal, D. Boyer, L. Dagdug and A. Pal, <a href="https://pubs.aip.org/aip/jcp/article/161/14/144114/3316212" target="_blank">"Channel-facilitated transport under resetting dynamics,"</a> <em>The Journal of Chemical Physics</em>, 2024.</li>
-			<li>S. Ghosh, S. Pal, G. K. Sar and D. Ghosh, <a href="https://journals.aps.org/pre/abstract/10.1103/PhysRevE.109.054205" target="_blank">"Amplitude responses of swarmalators,"</a> <em>Physical Review E</em>, 2024.</li>
-			<li>S. Pal, G. K. Sar, D. Ghosh and A. Pal, <a href="https://pubs.aip.org/aip/cha/article/34/2/021103/3265473" target="_blank">"Directional synchrony among self-propelled particles under spatial influence,"</a> <em>Chaos</em>, 2024.</li>
-		</ol>
-    </section>
+        // 3. Scrollspy for Active Navigation Links
+        const sections = document.querySelectorAll("section[id], div[id='expertise']");
+        const navLinks = document.querySelectorAll(".nav-links a");
 
-    <section id="achievements">
-        <h2>Achievements & Scholarships</h2>
-        <ul>
-            <li><strong>2021:</strong> AIR-30 rank in JEST.</li>
-            <li><strong>2020:</strong> AIR-152 rank in CSIR-NET. AIR-1 rank in ISI test + Interview.</li>
-            <li><strong>2018:</strong> AIR-652 rank in IIT-JAM.</li>
-            <li><strong>Scholarships:</strong> SVMCM Awarded by West Bengal Government (2013-2015, 2015-2018, 2018-2020).</li>
-        </ul>
-    </section>
+        window.addEventListener("scroll", () => {
+            let current = "";
+            const scrollY = window.pageYOffset;
 
-    <section id="references">
-        <h2>References</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Name & Title </th>
-                    <th>Institution </th>
-                    <th>Contact </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>Prof. Dibakar Ghosh</strong><br>Professor </td>
-                    <td>Indian Statistical Institute, Kolkata </td>
-                    <td><a href="mailto:dibakar@isical.ac.in">dibakar@isical.ac.in</a> </td>
-                </tr>
-                <tr>
-                    <td><strong>Dr. Arnab Pal</strong><br>Reader </td>
-                    <td>Institute of Mathematical Sciences, Chennai </td>
-                    <td><a href="mailto:arnabpal@imsc.res.in">arnabpal@imsc.res.in</a> </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+            sections.forEach(section => {
+                const sectionHeight = section.offsetHeight;
+                const sectionTop = section.offsetTop - 150; // offset for sticky nav
+                
+                if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+                    current = section.getAttribute("id");
+                }
+            });
 
-    <footer>
-        <p>&copy; 2026 Suvam Pal. All rights reserved.</p>
-    </footer>
-</div>
+            // Special case for hitting the bottom of the page
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 50) {
+                current = "awards";
+            }
 
+            navLinks.forEach(link => {
+                link.classList.remove("active");
+                if (link.getAttribute("href") === "#" + current) {
+                    link.classList.add("active");
+                }
+            });
+        });
+    </script>
 </body>
 </html>
