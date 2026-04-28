@@ -179,6 +179,36 @@
             flex-wrap: wrap;
         }
 
+        /* --- NEW CV BUTTON STYLING --- */
+        .cv-button {
+            display: inline-flex;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--bg-color);
+            background-color: var(--accent);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 14px 0 rgba(56, 189, 248, 0.39);
+            transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+            width: fit-content;
+        }
+
+        .cv-button:hover {
+            text-decoration: none;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
+            background-color: #7dd3fc;
+            color: var(--bg-color);
+        }
+
+        .cv-button svg {
+            margin-right: 0.6rem;
+            width: 18px;
+            height: 18px;
+        }
+        /* ----------------------------- */
+
         .contact-link {
             display: inline-flex;
             align-items: center;
@@ -587,6 +617,11 @@
                 </p>
 
                 <div class="contact-group">
+                    <a href="my_CV.pdf" target="_blank" class="cv-button">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                        View My CV
+                    </a>
+                    
                     <a href="mailto:suvamjoy256@gmail.com" class="contact-link">
                         suvamjoy256@gmail.com 
                         <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
